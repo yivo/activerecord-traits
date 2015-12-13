@@ -1,0 +1,41 @@
+module Traits
+  class Association
+    module Macro
+      extend ActiveSupport::Concern
+
+      delegate :macro, to: :reflection
+
+      def short_macro
+        habtm? ? :habtm : macro
+      end
+
+      def has_and_belongs_to_many?
+        macro == :has_and_belongs_to_many
+      end
+
+      alias habtm? has_and_belongs_to_many?
+
+      def has_many?
+        macro == :has_many
+      end
+
+      def has_one?
+        macro == :has_one
+      end
+
+      def belongs_to?
+        macro == :belongs_to
+      end
+
+      def to_many?
+        has_and_belongs_to_many? || has_many?
+      end
+
+      alias collection? to_many?
+
+      def to_one?
+        belongs_to? || has_one?
+      end
+    end
+  end
+end
