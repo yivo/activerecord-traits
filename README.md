@@ -3,6 +3,8 @@
 ##### This library provides a series of classes to obtain type information of ActiveRecord models, attributes and associations.
 This library is focused only on standard ActiveRecord features and will not provide information for ActiveRecord plugins such as Globalize, CarrierWave, Paranoid and others.
 
+API design is done in good and clear manner for best understanding.
+
 **All base ActiveRecord features are supported.**
 
 **Supported advanced ActiveRecord features:**
