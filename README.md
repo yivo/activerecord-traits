@@ -41,6 +41,20 @@ API design is done in good and clear manner for best understanding.
   Photo.traits.attributes[:imageable_type].polymorphic_type?                  # => true
   
   Article.traits.attributes[:author_id].foreign_key?                          # => true 
+  
+  class Present < ActiveRecord::Base
+  end
+  
+  class Toy < Present
+  end
+  
+  class VideoGame < Present
+  end
+  
+  Present.traits.sti_base? # => true
+  Toy.traits.sti_derived?  # => true
+  Toy.traits.sti_chain     # => [Present, Toy]
+  
 ```
 
 ## Gemfile
