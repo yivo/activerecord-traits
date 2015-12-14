@@ -15,18 +15,31 @@ API design is done in good and clear manner for best understanding.
  4. Single Table Inheritance
  5. SQL Join metadata
 
+## Example of usage
 ```ruby
 
   class Author < ActiveRecord::Base
     has_many :articles
+    has_one :photo, as: :imageable
   end
 
   class Article < ActiveRecord::Base
     belongs_to :author
   end
+  
+  class Photo
+    belongs_to :imageable, polymorphic: true
+  end
 
-  Author.traits.
-
+  Author.traits.associations[:articles].has_many?                    # => true
+  Author.traits.associations[:articles].to_class                     # => Article
+  Author.traits.associations[:articles].paired_through_polymorphism? # => true
+  
+  Photo.traits.associations[:imageable].polymorphic?                          # => true
+  Photo.traits.associations[:imageable].accepted_classes_through_polymorphism # => [Author]
+  Photo.traits.attributes[:imageable_type].polymorphic_type?                  # => true
+  
+  Article.traits.attributes[:author_id].foreign_key?                          # => true 
 ```
 
 ## Gemfile
