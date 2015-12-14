@@ -104,6 +104,17 @@ module Traits
           to.attributes[reflection.foreign_type]
         end
       end
+
+      def to_hash
+        accepted_classes = accepted_classes_through_polymorphism
+        super.merge!(
+          polymorphic:                  polymorphic?,
+          paired_through_polymorphism:  paired_through_polymorphism?,
+
+          attribute_name_for_polymorphic_type:   attribute_name_for_polymorphic_type,
+          accepted_classes_through_polymorphism: accepted_classes.try(:map) { |el| el.traits.name }
+        )
+      end
     end
   end
 end
