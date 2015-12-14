@@ -18,6 +18,13 @@ module Traits
             attribute_name_for_polymorphic_type: name
           ).present?
       end
+
+      def to_hash
+        super.merge!(
+          polymorphic_key:  polymorphic_key?,
+          polymorphic_type: polymorphic_type?
+        )
+      end
     end
   end
 end

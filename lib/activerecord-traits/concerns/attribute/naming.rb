@@ -12,7 +12,10 @@ module Traits
       end
 
       def to_hash
-        super.merge!(name: name, quoted_name: quoted_name)
+        super.merge!(
+          name:        name,
+          quoted_name: quoted_name
+        )
       end
     end
   end
