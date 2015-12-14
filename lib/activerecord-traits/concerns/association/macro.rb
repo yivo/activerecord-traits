@@ -36,6 +36,10 @@ module Traits
       def to_one?
         belongs_to? || has_one?
       end
+
+      def to_hash
+        super.merge!(macro: macro, collection: collection?)
+      end
     end
   end
 end

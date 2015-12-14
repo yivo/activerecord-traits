@@ -26,6 +26,7 @@ module Traits
         elsif through?
           through_association.from_key_name
 
+        # TODO Use essay feature
         elsif translates?
           nil
 
@@ -73,6 +74,18 @@ module Traits
             reflection.foreign_key.to_sym
           end
         end
+      end
+
+      def to_hash
+        super.merge!(
+          from_table_name:  from_table_name,
+          from_table_alias: from_table_alias,
+          from_key_name:    from_key_name,
+
+          to_table_name:    to_table_name,
+          to_table_alias:   to_table_alias,
+          to_key_name:      to_key_name
+        )
       end
     end
   end

@@ -58,6 +58,17 @@ module Traits
           source_association.from_key_name
         end
       end
+
+      def to_hash
+        super.merge!(
+          through:               through.try(:name),
+          through_association:   through_association_name,
+          source_association:    source_association_name,
+          through_table_name:    through_table_name,
+          through_to_key_name:   through_to_key_name,
+          through_from_key_name: through_from_key_name
+        )
+      end
     end
   end
 end

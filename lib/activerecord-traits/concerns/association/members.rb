@@ -21,8 +21,16 @@ module Traits
         reflection.klass unless polymorphic?
       end
 
+      def self_to_self?
+        from_class == to_class
+      end
+
       def to_hash
-        super.merge!(from: from.name, to: to.try(:name))
+        super.merge!(
+          from:         from.name,
+          to:           to.try(:name),
+          self_to_self: self_to_self?
+        )
       end
     end
   end

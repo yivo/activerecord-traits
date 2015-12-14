@@ -43,6 +43,15 @@ module Traits
           reflection.association_foreign_key.to_sym
         end
       end
+
+      def to_hash
+        super.merge!(
+          intermediate:               intermediate?,
+          intermediate_table_name:    intermediate_table_name,
+          intermediate_to_key_name:   intermediate_to_key_name,
+          intermediate_from_key_name: intermediate_from_key_name
+        )
+      end
     end
   end
 end
