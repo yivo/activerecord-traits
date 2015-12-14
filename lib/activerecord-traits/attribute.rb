@@ -1,6 +1,19 @@
 module Traits
+  class Attribute < Base
+  end
+end
+
+require 'activerecord-traits/concerns/attribute/key'
+require 'activerecord-traits/concerns/attribute/naming'
+require 'activerecord-traits/concerns/attribute/polymorphism'
+require 'activerecord-traits/concerns/attribute/querying'
+require 'activerecord-traits/concerns/attribute/sti'
+require 'activerecord-traits/concerns/attribute/type'
+
+module Traits
   class Attribute
     include Key
+    include Naming
     include Type
     include Polymorphism
     include Querying
