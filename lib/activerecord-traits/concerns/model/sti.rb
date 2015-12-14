@@ -30,6 +30,14 @@ module Traits
         end
         chain
       end
+
+      def to_hash
+        super.merge!(
+          sti_base:           sti_base?,
+          sti_derived:        sti_derived?,
+          sti_attribute_name: sti_attribute_name
+        )
+      end
     end
   end
 end

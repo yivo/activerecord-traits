@@ -4,11 +4,11 @@ module Traits
       extend ActiveSupport::Concern
 
       def name
-        column.name.to_sym
+        column_definition.name.to_sym
       end
 
       def quoted_name
-        model.klass.connection.quote_column_name(name)
+        model_class.connection.quote_column_name(name)
       end
 
       def to_hash

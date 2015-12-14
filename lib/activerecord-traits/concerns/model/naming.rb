@@ -70,6 +70,16 @@ module Traits
       def lookup_name(namecase = :class)
         namecase == :underscore ? name.gsub('/', '_') : class_name.gsub('::', '')
       end
+
+      def to_hash
+        super.merge!(
+          name:          name,
+          plural_name:   plural_name,
+          class_name:    class_name,
+          lookup_name:   lookup_name,
+          resource_name: resource_name
+        )
+      end
     end
   end
 end

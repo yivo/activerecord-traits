@@ -4,7 +4,7 @@ module Traits
       extend ActiveSupport::Concern
 
       def type
-        column.type.to_sym
+        column_definition.type.to_sym
       end
 
       def string?

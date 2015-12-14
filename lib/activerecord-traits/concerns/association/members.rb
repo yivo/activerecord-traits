@@ -27,7 +27,7 @@ module Traits
 
       def to_hash
         super.merge!(
-          from:         from.name,
+          from:         activerecord-traits/from.name,
           to:           to.try(:name),
           self_to_self: self_to_self?
         )

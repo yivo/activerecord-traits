@@ -12,7 +12,7 @@ module Traits
       # TODO Use essay features
       def foreign_key?
         attr_name       = name
-        attr_translates = translates?
+        attr_translates = false # translates?
 
         model.associations.any? do |assoc|
           if assoc.belongs_to?
