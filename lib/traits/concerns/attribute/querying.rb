@@ -3,9 +3,12 @@ module Traits
     module Querying
       extend ActiveSupport::Concern
 
-      # TODO Use essay for feature tests
       def arel
-        table = translates? ? model.translation_model_class.arel_table : model.arel
+        table = if roles.translates_with_globalize?
+          model_class.features.globalize.translation_model_class.arel_table
+        else
+          model.arel
+        end
         table[name]
       end
     end

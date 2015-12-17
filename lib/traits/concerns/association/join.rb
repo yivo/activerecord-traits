@@ -26,8 +26,7 @@ module Traits
         elsif through?
           through_association.from_key_name
 
-        # TODO Use essay feature
-        elsif translates?
+        elsif roles.translates_with_globalize?
           nil
 
         elsif belongs_to?

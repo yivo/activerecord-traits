@@ -9,15 +9,14 @@ module Traits
           type == :primary_key
       end
 
-      # TODO Use essay features
       def foreign_key?
         attr_name       = name
-        attr_translates = false # translates?
+        attr_translates = model_class.attribute_roles[attr_name].translates_with_globalize?
 
         model.associations.any? do |assoc|
           if assoc.belongs_to?
-            if attr_translates
-              assoc.translation_from_key_name == attr_name
+            if attr_translates && assoc.roles.translates_with_globalize?
+              assoc.roles.globalize_translatable.from_key_name == attr_name
             else
               assoc.from_key_name == attr_name
             end

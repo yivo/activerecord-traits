@@ -45,10 +45,13 @@ module Traits
 
   protected
 
-    # TODO Translated attributes
     # TODO Store, Storage, Virtual attributes
     def inspect_attributes
       columns = model_class.columns_hash.values
+
+      if model_class.features.translates_with_globalize?
+        columns += model_class.features.globalize.translated_attribute_names
+      end
 
       list = columns.map do |column|
         Traits::Attribute.new(model_class, column)
