@@ -5,6 +5,8 @@ module Traits
     end
 
     def load_active_record_descendants!
+      # Railties are not necessary here
+      # Source: http://stackoverflow.com/questions/6497834/differences-between-railties-and-engines-in-ruby-on-rails-3
       Rails::Engine.subclasses.map(&:instance).each { |i| i.eager_load! }
       Rails.application.eager_load!
     end
