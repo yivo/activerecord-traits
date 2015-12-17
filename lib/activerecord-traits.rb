@@ -1,11 +1,15 @@
 require 'active_support/all'
 require 'active_record'
 
-require 'activerecord-traits/base'
-require 'activerecord-traits/attribute'
-require 'activerecord-traits/association'
-require 'activerecord-traits/model'
-require 'activerecord-traits/list'
+require 'traits/engine'
+require 'traits/utilities'
+require 'traits/descendants_listing'
+
+require 'traits/base'
+require 'traits/attribute'
+require 'traits/association'
+require 'traits/model'
+require 'traits/list'
 
 class ActiveRecord::Base
   def self.traits
@@ -14,10 +18,13 @@ class ActiveRecord::Base
 end
 
 module Traits
-  def active_record_descendants
-    raise NotImplementedError, '
-      Please implement the way of requiring all ActiveRecord models.
-      In common cases `Rails.application.eager_load!` will do the trick.
-    '
+  def self.for(obj)
+    retrieve_model_class(obj).traits
+  end
+
+  def self.to_hash
+    active_record_descendants.each_with_object({}) do |ar, memo|
+      memo[ar.traits.name] = ar.traits.to_hash
+    end
   end
 end

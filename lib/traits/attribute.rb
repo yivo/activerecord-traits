@@ -3,12 +3,12 @@ module Traits
   end
 end
 
-require 'activerecord-traits/concerns/attribute/key'
-require 'activerecord-traits/concerns/attribute/naming'
-require 'activerecord-traits/concerns/attribute/polymorphism'
-require 'activerecord-traits/concerns/attribute/querying'
-require 'activerecord-traits/concerns/attribute/sti'
-require 'activerecord-traits/concerns/attribute/type'
+require 'traits/concerns/attribute/key'
+require 'traits/concerns/attribute/naming'
+require 'traits/concerns/attribute/polymorphism'
+require 'traits/concerns/attribute/querying'
+require 'traits/concerns/attribute/sti'
+require 'traits/concerns/attribute/type'
 
 module Traits
   class Attribute
@@ -37,6 +37,10 @@ module Traits
 
     def validators
       model_class.validators_on(name)
+    end
+
+    def value_from(model_instance)
+      model_instance[name]
     end
 
     def to_s

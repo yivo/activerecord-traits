@@ -3,10 +3,10 @@ module Traits
   end
 end
 
-require 'activerecord-traits/concerns/model/naming'
-require 'activerecord-traits/concerns/model/polymorphism'
-require 'activerecord-traits/concerns/model/sti'
-require 'activerecord-traits/concerns/model/querying'
+require 'traits/concerns/model/naming'
+require 'traits/concerns/model/polymorphism'
+require 'traits/concerns/model/sti'
+require 'traits/concerns/model/querying'
 
 module Traits
   class Model
