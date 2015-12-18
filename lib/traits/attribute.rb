@@ -9,6 +9,7 @@ require 'traits/concerns/attribute/polymorphism'
 require 'traits/concerns/attribute/querying'
 require 'traits/concerns/attribute/sti'
 require 'traits/concerns/attribute/type'
+require 'traits/concerns/attribute/essay_shortcuts'
 
 module Traits
   class Attribute
@@ -18,6 +19,7 @@ module Traits
     include Polymorphism
     include Querying
     include STI
+    include EssayShortcuts
 
     attr_reader :model_class, :column_definition
 

@@ -7,6 +7,7 @@ require 'traits/concerns/model/naming'
 require 'traits/concerns/model/polymorphism'
 require 'traits/concerns/model/sti'
 require 'traits/concerns/model/querying'
+require 'traits/concerns/model/essay_shortcuts'
 
 module Traits
   class Model
@@ -14,6 +15,7 @@ module Traits
     include STI
     include Polymorphism
     include Querying
+    include EssayShortcuts
 
     attr_reader :model_class
 
@@ -49,8 +51,14 @@ module Traits
     def inspect_attributes
       columns = model_class.columns_hash.values
 
-      if model_class.features.translates_with_globalize?
-        columns += model_class.features.globalize.translated_attribute_names
+      if features.translates_with_globalize?
+        globalize       = features.globalize
+        tr_class        = globalize.model_class_for_translations
+        tr_columns_hash = tr_class.columns_hash
+
+        columns += globalize.translated_attribute_names.map do |el|
+          tr_columns_hash[el.to_s]
+        end
       end
 
       list = columns.map do |column|

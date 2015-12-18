@@ -16,7 +16,7 @@ module Traits
         model.associations.any? do |assoc|
           if assoc.belongs_to?
             if attr_translates && assoc.roles.translates_with_globalize?
-              assoc.roles.globalize_translatable.from_key_name == attr_name
+              assoc.roles.globalize_translatable.translation_from_key_name == attr_name
             else
               assoc.from_key_name == attr_name
             end

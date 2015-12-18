@@ -4,7 +4,7 @@ module Traits
       extend ActiveSupport::Concern
 
       def roles
-        model_class.association_roles[name]
+        from_class.association_roles[name]
       end
     end
   end

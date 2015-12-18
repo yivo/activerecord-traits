@@ -11,6 +11,7 @@ require 'traits/concerns/association/naming'
 require 'traits/concerns/association/polymorphism'
 require 'traits/concerns/association/read_only'
 require 'traits/concerns/association/through'
+require 'traits/concerns/association/essay_shortcuts'
 
 module Traits
   class Association
@@ -22,6 +23,7 @@ module Traits
     include Join
     include ReadOnly
     include Polymorphism
+    include EssayShortcuts
 
     attr_reader :reflection
 
