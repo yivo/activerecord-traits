@@ -6,8 +6,8 @@ Gem::Specification.new do |s|
   s.version         = Traits::VERSION
   s.authors         = ['Yaroslav Konoplov']
   s.email           = ['yaroslav@inbox.com']
-  s.summary         = 'Wrapper around ActiveRecord::Reflection'
-  s.description     = 'Wrapper around ActiveRecord::Reflection'
+  s.summary         = 'Type information of ActiveRecord models, attributes and associations'
+  s.description     = 'Type information of ActiveRecord models, attributes and associations'
   s.homepage        = 'http://github.com/yivo/activerecord-traits'
   s.license         = 'MIT'
 
