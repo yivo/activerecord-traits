@@ -1,10 +1,12 @@
 require 'active_support/all'
 require 'active_record'
+require 'essay'
+require 'essay-globalize'
+require 'essay-carrierwave'
 
 require 'traits/engine'
 require 'traits/utilities'
 require 'traits/descendants_listing'
-
 require 'traits/base'
 require 'traits/attribute'
 require 'traits/association'
