@@ -1,8 +1,6 @@
 module Traits
   class Model
     module STI
-      extend ActiveSupport::Concern
-
       def uses_sti?
         sti_base? || sti_derived?
       end

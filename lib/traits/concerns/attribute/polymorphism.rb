@@ -1,8 +1,6 @@
 module Traits
   class Attribute
     module Polymorphism
-      extend ActiveSupport::Concern
-
       def polymorphic_key?
         model.associations
           .first_where(

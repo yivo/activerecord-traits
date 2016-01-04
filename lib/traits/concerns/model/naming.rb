@@ -1,8 +1,6 @@
 module Traits
   class Model
     module Naming
-      extend ActiveSupport::Concern
-
       # class User
       #   name => user
       #

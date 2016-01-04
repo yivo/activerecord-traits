@@ -34,7 +34,7 @@ module Traits
 
     # TODO Remove this
     def regular?
-      !(key? || sti_type? || polymorphic_type? || active_record_timestamp? || has_uploader?)
+      !(key? || sti_type? || polymorphic_type? || active_record_timestamp?)
     end
 
     def validators

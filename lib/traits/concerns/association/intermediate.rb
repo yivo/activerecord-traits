@@ -1,8 +1,6 @@
 module Traits
   class Association
     module Intermediate
-      extend ActiveSupport::Concern
-
       # class Person
       #   has_and_belongs_to_many :groups
       #

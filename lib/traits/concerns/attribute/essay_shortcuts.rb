@@ -1,9 +1,7 @@
 module Traits
   class Attribute
     module EssayShortcuts
-      extend ActiveSupport::Concern
-
-      def roles
+      def features
         model_class.attribute_roles[name]
       end
     end

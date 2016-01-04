@@ -1,8 +1,6 @@
 module Traits
   class Association
     module Macro
-      extend ActiveSupport::Concern
-
       delegate :macro, to: :reflection
 
       def short_macro

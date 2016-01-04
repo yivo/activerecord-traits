@@ -1,8 +1,6 @@
 module Traits
   class Association
     module Members
-      extend ActiveSupport::Concern
-
       def from
         @from_class.traits
       end

@@ -1,8 +1,6 @@
 module Traits
   class Attribute
     module Naming
-      extend ActiveSupport::Concern
-
       def name
         column_definition.name.to_sym
       end

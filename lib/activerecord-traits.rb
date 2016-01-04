@@ -18,13 +18,25 @@ class ActiveRecord::Base
 end
 
 module Traits
+  extend Enumerable
+
   def self.for(obj)
     retrieve_model_class(obj).traits
   end
 
+  def self.each(&block)
+    active_record_descendants.each { |ar| block.call(ar.traits) }
+  end
+
+  def self.all
+    each_with_object({}) do |traits, memo|
+      memo[traits.name] = traits
+    end
+  end
+
   def self.to_hash
-    active_record_descendants.each_with_object({}) do |ar, memo|
-      memo[ar.traits.name] = ar.traits.to_hash
+    each_with_object({}) do |traits, memo|
+      memo[traits.name] = traits.to_hash
     end
   end
 end

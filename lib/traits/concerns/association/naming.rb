@@ -1,8 +1,6 @@
 module Traits
   class Association
     module Naming
-      extend ActiveSupport::Concern
-
       delegate :name, to: :reflection
 
       def plural_name

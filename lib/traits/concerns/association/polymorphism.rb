@@ -1,8 +1,6 @@
 module Traits
   class Association
     module Polymorphism
-      extend ActiveSupport::Concern
-
       # class Picture
       #   belongs_to :imageable, polymorphic: true
       #

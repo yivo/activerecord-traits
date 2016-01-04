@@ -1,9 +1,7 @@
 module Traits
   class Association
     module EssayShortcuts
-      extend ActiveSupport::Concern
-
-      def roles
+      def features
         from_class.association_roles[name]
       end
     end

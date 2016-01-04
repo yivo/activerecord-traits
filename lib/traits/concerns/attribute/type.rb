@@ -1,8 +1,6 @@
 module Traits
   class Attribute
     module Type
-      extend ActiveSupport::Concern
-
       def type
         column_definition.type.to_sym
       end

@@ -1,8 +1,6 @@
 module Traits
   class Association
     module Join
-      extend ActiveSupport::Concern
-
       def from_table
         from.arel
       end

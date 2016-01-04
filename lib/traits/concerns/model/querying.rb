@@ -1,8 +1,6 @@
 module Traits
   class Model
     module Querying
-      extend ActiveSupport::Concern
-
       def primary_key_name
         model_class.primary_key.to_sym
       end

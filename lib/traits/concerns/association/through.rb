@@ -1,8 +1,6 @@
 module Traits
   class Association
     module Through
-      extend ActiveSupport::Concern
-
       def through?
         reflection.through_reflection.present?
       end

@@ -1,8 +1,6 @@
 module Traits
   class Attribute
     module Key
-      extend ActiveSupport::Concern
-
       def primary_key?
         column_definition.try(:primary) ||
           model_class.primary_key == column_definition.name ||
@@ -15,8 +13,8 @@ module Traits
 
         model.associations.any? do |assoc|
           if assoc.belongs_to?
-            if attr_translates && assoc.roles.translates_with_globalize?
-              assoc.roles.globalize_translatable.translation_from_key_name == attr_name
+            if attr_translates && assoc.features.translates_with_globalize?
+              assoc.features.globalize_translatable.translation_from_key_name == attr_name
             else
               assoc.from_key_name == attr_name
             end
