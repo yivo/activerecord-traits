@@ -5,6 +5,10 @@ module Traits
         model_class.primary_key.to_sym
       end
 
+      def primary_key_attribute
+        attributes[primary_key_name]
+      end
+
       def arel
         model_class.arel_table
       end

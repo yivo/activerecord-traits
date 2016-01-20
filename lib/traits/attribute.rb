@@ -42,7 +42,7 @@ module Traits
     end
 
     def value_from(model_instance)
-      model_instance[name]
+      model_instance.send(name)
     end
 
     def to_s

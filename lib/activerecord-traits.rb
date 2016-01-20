@@ -36,6 +36,10 @@ module Traits
     end
   end
 
+  def self.each_attribute(&block)
+    each { |traits| traits.attributes.each(&block) }
+  end
+
   def self.to_hash
     each_with_object({}) do |traits, memo|
       memo[traits.name] = traits.to_hash
