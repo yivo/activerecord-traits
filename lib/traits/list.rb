@@ -49,4 +49,10 @@ module Traits
       each_with_object({}) { |item, memo| memo[item.name] = item.to_hash }
     end
   end
+
+  class AttributeList < List
+    def primary_key
+      first_where(primary_key?: true)
+    end
+  end
 end

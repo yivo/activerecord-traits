@@ -31,9 +31,10 @@ module Traits
 
       def to_hash
         super.merge!(
-          sti_base:           sti_base?,
-          sti_derived:        sti_derived?,
-          sti_attribute_name: sti_attribute_name
+          is_sti_base:        sti_base?,
+          is_sti_derived:     sti_derived?,
+          sti_attribute_name: sti_attribute_name,
+          sti_chain:          sti_chain.map { |model_class| model_class.traits.name }
         )
       end
     end

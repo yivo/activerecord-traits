@@ -65,7 +65,7 @@ module Traits
         Traits::Attribute.new(model_class, column)
       end
 
-      Traits::List.new(list)
+      Traits::AttributeList.new(list)
     end
 
     def inspect_associations

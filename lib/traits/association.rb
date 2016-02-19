@@ -35,5 +35,13 @@ module Traits
     def to_s
       "#{from.class_name}##{name}"
     end
+
+    def value_from(model)
+      model.send(name)
+    end
+
+    def validators
+      from_class.validators_on(name)
+    end
   end
 end
