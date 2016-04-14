@@ -2,7 +2,9 @@ module Traits
   class Model
     module Querying
       def primary_key_name
-        model_class.primary_key.to_sym
+        # Sometimes table doesn't have primary key.
+        # This might be many-to-many tables (HABTM).
+        model_class.primary_key.try(:to_sym)
       end
 
       def primary_key_attribute
