@@ -48,5 +48,9 @@ module Traits
     def to_s
       "#{model}##{name}"
     end
+
+    def association
+      model.associations.first_where(from_key_name: name)
+    end
   end
 end
