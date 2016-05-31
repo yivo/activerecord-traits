@@ -7,7 +7,7 @@ require 'traits/concerns/attribute/key'
 require 'traits/concerns/attribute/naming'
 require 'traits/concerns/attribute/polymorphism'
 require 'traits/concerns/attribute/querying'
-require 'traits/concerns/attribute/sti'
+require 'traits/concerns/attribute/inheritance'
 require 'traits/concerns/attribute/type'
 require 'traits/concerns/attribute/essay_shortcuts'
 
@@ -18,7 +18,7 @@ module Traits
     include Type
     include Polymorphism
     include Querying
-    include STI
+    include Inheritance
     include EssayShortcuts
 
     attr_reader :model_class, :column_definition
@@ -51,6 +51,10 @@ module Traits
 
     def association
       model.associations.first_where(from_key_name: name)
+    end
+
+    def null?
+      column_definition.null
     end
   end
 end

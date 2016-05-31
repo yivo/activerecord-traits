@@ -1,27 +1,28 @@
 module Traits
   module DescendantsListing
     def active_record_descendants_loaded?
-      !!@ar_descendants
+      !!@ar_descendants_loaded
     end
 
     def load_active_record_descendants!
-      # Railties are not necessary here
-      # Source: http://stackoverflow.com/questions/6497834/differences-between-railties-and-engines-in-ruby-on-rails-3
-      Rails::Engine.subclasses.map(&:instance).each { |i| i.eager_load! }
-      Rails.application.eager_load!
+      @ar_descendants_loaded ||= begin
+        # Railties are not necessary here
+        # Source: http://stackoverflow.com/questions/6497834/differences-between-railties-and-engines-in-ruby-on-rails-3
+        Rails::Engine.subclasses.map(&:instance).each { |i| i.eager_load! }
+        Rails.application.eager_load!
+        true
+      end
     end
 
     def invalidate_loaded_active_record_descendants!
-      @ar_descendants = nil
+      @ar_descendants        = nil
+      @ar_descendants_loaded = false
     end
 
     def active_record_descendants
       @ar_descendants ||= begin
         load_active_record_descendants!
-        descendants = ActiveRecord::Base.descendants
-
-        descendants.reject! { |ar| excluded_active_record_descendant?(ar) }
-        descendants
+        ActiveRecord::Base.descendants.reject! { |ar| excluded_active_record_descendant?(ar) }
       end
     end
 

@@ -2,11 +2,11 @@ module Traits
   class Attribute
     module Naming
       def name
-        column_definition.name.to_sym
+        @name ||= column_definition.name.to_sym
       end
 
       def quoted_name
-        model_class.connection.quote_column_name(name)
+        @quoted_name ||= model_class.connection.quote_column_name(name)
       end
 
       def to_hash

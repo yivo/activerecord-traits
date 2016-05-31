@@ -2,7 +2,7 @@ module Traits
   class Attribute
     module Type
       def type
-        column_definition.type.to_sym
+        @type ||= column_definition.type.to_sym
       end
 
       def string?

@@ -5,14 +5,14 @@ end
 
 require 'traits/concerns/model/naming'
 require 'traits/concerns/model/polymorphism'
-require 'traits/concerns/model/sti'
+require 'traits/concerns/model/inheritance'
 require 'traits/concerns/model/querying'
 require 'traits/concerns/model/essay_shortcuts'
 
 module Traits
   class Model
     include Naming
-    include STI
+    include Inheritance
     include Polymorphism
     include Querying
     include EssayShortcuts
@@ -43,6 +43,11 @@ module Traits
         attributes:   attributes.to_hash,
         associations: associations.to_hash
       )
+    end
+
+    def descendants
+      Traits.load_active_record_descendants!
+      active_record.descendants
     end
 
   protected

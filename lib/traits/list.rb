@@ -41,7 +41,7 @@ module Traits
     end
 
     def by_name(name)
-      name = name.to_s.to_sym
+      name = name.to_sym if name.kind_of?(String)
       find { |attr| attr.name == name }
     end
 
