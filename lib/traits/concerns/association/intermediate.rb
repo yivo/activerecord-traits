@@ -11,34 +11,39 @@ module Traits
       end
 
       def intermediate_table
-        if intermediate?
-          Arel::Table.new(reflection.join_table)
-        end
+        Arel::Table.new(reflection.join_table) if intermediate?
       end
 
       def intermediate_table_name
-        if intermediate?
-          reflection.join_table
+        return unless intermediate?
+        unless @im_table_name
+          name           = reflection.join_table
+          @im_table_name = name.kind_of?(String) ? name.to_sym : name
         end
+        @im_table_name
       end
 
       def intermediate_to_key
-        intermediate_table.try(:[], intermediate_to_key_name)
+        if intermediate?
+          intermediate_table[intermediate_to_key_name]
+        end
       end
 
       def intermediate_to_key_name
         if intermediate?
-          reflection.foreign_key.to_sym
+          @im_to_key_name ||= reflection.foreign_key.to_sym
         end
       end
 
       def intermediate_from_key
-        intermediate_table.try(:[], intermediate_from_key_name)
+        if intermediate?
+          intermediate_table[intermediate_from_key_name]
+        end
       end
 
       def intermediate_from_key_name
         if intermediate?
-          reflection.association_foreign_key.to_sym
+          @im_from_key_name ||= reflection.association_foreign_key.to_sym
         end
       end
 

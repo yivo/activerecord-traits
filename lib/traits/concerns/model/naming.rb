@@ -66,7 +66,9 @@ module Traits
       #   lookup_name(:underscore) => assets_photo
       #
       def lookup_name(namecase = :class)
-        namecase == :underscore ? name.gsub('/', '_') : class_name.gsub('::', '')
+        namecase == :underscore ?
+            @lookup_name_underscore_case ||= name.gsub('/', '_') :
+            @lookup_name_class_case      ||= class_name.gsub('::', '')
       end
 
       def to_hash

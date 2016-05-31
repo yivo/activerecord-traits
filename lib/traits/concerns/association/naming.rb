@@ -4,7 +4,7 @@ module Traits
       delegate :name, to: :reflection
 
       def plural_name
-        reflection.plural_name.to_sym
+        @plural_name ||= reflection.plural_name.to_sym
       end
 
       def to_hash

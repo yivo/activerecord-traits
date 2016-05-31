@@ -56,6 +56,10 @@ module Traits
       end
       alias sti_chain inheritance_chain
 
+      def inheritance_base
+        inheritance_chain[0]
+      end
+
       def to_hash
         super.merge!(
           is_sti_base:        sti_base?,
