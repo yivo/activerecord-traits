@@ -3,13 +3,13 @@ module Traits
   end
 end
 
-require 'traits/concerns/attribute/key'
-require 'traits/concerns/attribute/naming'
-require 'traits/concerns/attribute/polymorphism'
-require 'traits/concerns/attribute/querying'
-require 'traits/concerns/attribute/inheritance'
-require 'traits/concerns/attribute/type'
-require 'traits/concerns/attribute/essay_shortcuts'
+require 'traits/attribute/key'
+require 'traits/attribute/naming'
+require 'traits/attribute/polymorphism'
+require 'traits/attribute/querying'
+require 'traits/attribute/inheritance'
+require 'traits/attribute/type'
+require 'traits/attribute/essay_shortcuts'
 
 module Traits
   class Attribute

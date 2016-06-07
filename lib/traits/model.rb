@@ -3,11 +3,11 @@ module Traits
   end
 end
 
-require 'traits/concerns/model/naming'
-require 'traits/concerns/model/polymorphism'
-require 'traits/concerns/model/inheritance'
-require 'traits/concerns/model/querying'
-require 'traits/concerns/model/essay_shortcuts'
+require 'traits/model/naming'
+require 'traits/model/polymorphism'
+require 'traits/model/inheritance'
+require 'traits/model/querying'
+require 'traits/model/essay_shortcuts'
 
 module Traits
   class Model

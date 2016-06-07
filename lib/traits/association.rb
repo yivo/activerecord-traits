@@ -3,15 +3,15 @@ module Traits
   end
 end
 
-require 'traits/concerns/association/intermediate'
-require 'traits/concerns/association/join'
-require 'traits/concerns/association/macro'
-require 'traits/concerns/association/members'
-require 'traits/concerns/association/naming'
-require 'traits/concerns/association/polymorphism'
-require 'traits/concerns/association/read_only'
-require 'traits/concerns/association/through'
-require 'traits/concerns/association/essay_shortcuts'
+require 'traits/association/intermediate'
+require 'traits/association/join'
+require 'traits/association/macro'
+require 'traits/association/members'
+require 'traits/association/naming'
+require 'traits/association/polymorphism'
+require 'traits/association/read_only'
+require 'traits/association/through'
+require 'traits/association/essay_shortcuts'
 
 module Traits
   class Association
