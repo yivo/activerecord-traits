@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 module Traits
   module DescendantsListing
     def active_record_descendants_loaded?
