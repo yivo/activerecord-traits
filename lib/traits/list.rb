@@ -8,28 +8,14 @@ module Traits
     end
 
     def filter(hash)
-      select do |attr|
-        hash.all? do |method, expected|
-          returned = attr.send(method)
-          if expected.is_a?(Array)
-            expected.include?(returned)
-          else
-            returned == expected
-          end
-        end
+      select do |item|
+        hash.all? { |method, expected| compare(item, method, expected) }
       end
     end
 
     def first_where(hash)
-      find do |attr|
-        hash.all? do |method, expected|
-          returned = attr.send(method)
-          if expected.is_a?(Array)
-            expected.include?(returned)
-          else
-            returned == expected
-          end
-        end
+      find do |item|
+        hash.all? { |method, expected| compare(item, method, expected) }
       end
     end
 
@@ -48,6 +34,16 @@ module Traits
 
     def to_hash
       each_with_object({}) { |item, memo| memo[item.name] = item.to_hash }
+    end
+
+  protected
+    def compare(item, method, expected)
+      returned = item.send(method)
+      case expected
+        when Array  then expected.include?(returned)
+        when Regexp then returned =~ expected
+        else returned == expected
+      end
     end
   end
 

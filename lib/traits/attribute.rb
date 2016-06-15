@@ -46,8 +46,12 @@ module Traits
       model_instance.send(name)
     end
 
-    def to_s
+    def inspect
       "#{model}##{name}"
+    end
+
+    def to_s
+      name
     end
 
     def association

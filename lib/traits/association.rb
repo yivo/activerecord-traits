@@ -33,8 +33,12 @@ module Traits
       @reflection = reflection
     end
 
-    def to_s
+    def inspect
       "#{from.class_name}##{name}"
+    end
+
+    def to_s
+      name
     end
 
     def value_from(model)
