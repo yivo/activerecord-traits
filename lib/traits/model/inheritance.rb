@@ -8,9 +8,9 @@ module Traits
       alias uses_sti? uses_inheritance?
 
       def inheritance_base?
-        model_class.descends_from_active_record? && model_class.subclasses.any? do |subclass|
-          subclass.superclass == model_class
-        end
+        model_class.descends_from_active_record? &&
+          !model_class.abstract_class? &&
+          model_class.subclasses.any? { |subclass| subclass.superclass == model_class }
       end
       alias sti_base? inheritance_base?
 

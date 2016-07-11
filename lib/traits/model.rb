@@ -55,30 +55,38 @@ module Traits
 
     # TODO Store, Storage, Virtual attributes
     def inspect_attributes
-      columns = model_class.columns_hash.values
+      if model_class.abstract_class?
+        Traits::AttributeList.new([])
+      else
+        columns = model_class.columns_hash.values
 
-      if features.translates_with_globalize?
-        globalize       = features.globalize
-        tr_class        = globalize.model_class_for_translations
-        tr_columns_hash = tr_class.columns_hash
+        if features.translates_with_globalize?
+          globalize       = features.globalize
+          tr_class        = globalize.model_class_for_translations
+          tr_columns_hash = tr_class.columns_hash
 
-        columns += globalize.translated_attribute_names.map do |el|
-          tr_columns_hash[el.to_s]
+          columns += globalize.translated_attribute_names.map do |el|
+            tr_columns_hash[el.to_s]
+          end
         end
-      end
 
-      list = columns.map do |column|
-        Traits::Attribute.new(model_class, column)
-      end
+        list = columns.map do |column|
+          Traits::Attribute.new(model_class, column)
+        end
 
-      Traits::AttributeList.new(list)
+        Traits::AttributeList.new(list)
+      end
     end
 
     def inspect_associations
-      list = model_class.reflections.map do |pair|
-        Traits::Association.new(model_class, pair.last)
+      if model_class.abstract_class?
+        Traits::List.new([])
+      else
+        list = model_class.reflections.map do |pair|
+          Traits::Association.new(model_class, pair.last)
+        end
+        Traits::List.new(list)
       end
-      Traits::List.new(list)
     end
   end
 end
