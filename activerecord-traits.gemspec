@@ -1,4 +1,6 @@
+# encoding: utf-8
 # frozen_string_literal: true
+
 require File.expand_path('../lib/traits/version', __FILE__)
 
 Gem::Specification.new do |s|
@@ -18,5 +20,4 @@ Gem::Specification.new do |s|
 
   s.add_dependency 'activesupport', '>= 3.0', '< 6.0'
   s.add_dependency 'activerecord',  '>= 3.0', '< 6.0'
-  s.add_dependency 'essay',         '~> 1.0'
 end
