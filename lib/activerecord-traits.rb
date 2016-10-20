@@ -1,11 +1,12 @@
 # frozen_string_literal: true
 require 'active_support/all'
 require 'active_record'
-require 'essay'
-require 'essay-globalize'
-require 'essay-carrierwave'
 
-require 'traits/engine'
+require 'essay'
+require 'essay-globalize'   if defined?(Globalize)
+require 'essay-carrierwave' if defined?(CarrierWave)
+
+require 'traits/railtie'
 require 'traits/utilities'
 require 'traits/descendants_listing'
 require 'traits/base'
