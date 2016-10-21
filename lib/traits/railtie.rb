@@ -3,7 +3,7 @@
 
 module Traits
   class Railtie < Rails::Railtie
-    initializer do |app|
+    initializer 'traits' do |app|
       unless app.config.cache_classes
         ActionDispatch::Reloader.to_prepare do
           Traits.invalidate_loaded_active_record_descendants!
