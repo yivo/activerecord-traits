@@ -62,7 +62,7 @@ module Traits
       else
         columns = model_class.columns_hash.values
 
-        if features.translates_with_globalize?
+        if features.try(:translates_with_globalize?)
           globalize       = features.globalize
           tr_class        = globalize.model_class_for_translations
           tr_columns_hash = tr_class.columns_hash

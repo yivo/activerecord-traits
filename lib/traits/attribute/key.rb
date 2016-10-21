@@ -12,7 +12,7 @@ module Traits
 
       def foreign_key?
         attr_name       = name
-        attr_translates = model_class.attribute_features[attr_name].translates_with_globalize?
+        attr_translates = model_class.attribute_features[attr_name].try(:translates_with_globalize?)
 
         model.associations.any? do |assoc|
           if assoc.belongs_to?

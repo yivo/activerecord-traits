@@ -27,7 +27,7 @@ module Traits
         elsif through?
           through_association.from_key_name
 
-        elsif features.translates_with_globalize?
+        elsif features.try(:translates_with_globalize?)
           nil
 
         elsif belongs_to?
