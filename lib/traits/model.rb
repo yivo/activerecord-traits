@@ -11,6 +11,7 @@ require 'traits/model/polymorphism'
 require 'traits/model/inheritance'
 require 'traits/model/querying'
 require 'traits/model/essay_shortcuts'
+require 'traits/model/i18n'
 
 module Traits
   class Model
@@ -19,6 +20,7 @@ module Traits
     include Polymorphism
     include Querying
     include EssayShortcuts
+    include I18n
 
     attr_reader :model_class
 
