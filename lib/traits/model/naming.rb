@@ -5,49 +5,58 @@ module Traits
   class Model
     module Naming
       # class User
-      #   name => user
+      #   name              => user
+      #   name(:underscore) => user
       #
       # class Assets::Photo
-      #   name => assets/photo
+      #   name              => assets/photo
+      #   name(:underscore) => assets_photo
       #
-      def name
-        # Rails 4.1 doesn't support nested acronyms
+      def name(namecase = nil)
+        # Rails 4.1 doesn't support nested acronyms.
         #
-        # Rails 4.1 behaviour:
-        # 'Helpers::ViewHelper'.underscore  => 'helpers/view_helper'  - good
-        # 'CIHelper'.underscore             => 'ci_helper'            - good
-        # 'Helpers::CIHelper'               => 'helpers/ci_helper'    - good
+        # Suppose you have:
+        #   ActiveSupport::Inflector.inflections(:en) do |inflect|
+        #     inflect.acronym 'CI'
+        #   end
         #
-        # 'Helpers::ViewHelper'             => 'helpers/view_helper'  - good
-        # 'CIHelper'                        => 'cihelper'             - good
-        # 'Helpers::CIHelper'               => 'helpers/ci_helper'    - bad!
+        # Rails 4.1 underscore behaviour:
+        #  'Helpers::ViewHelper'             => 'helpers/view_helper'  - good
+        #  'CIHelper'                        => 'ci_helper'            - good
+        #  'Helpers::CIHelper'               => 'helpers/ci_helper'    - good
         #
-        # Newer Rails behaviour:
-        # 'Helpers::ViewHelper'             => 'helpers/view_helper'  - good
-        # 'CIHelper'                        => 'cihelper'             - good
-        # 'Helpers::CIHelper'               => 'helpers/cihelper'     - good
+        #  'Helpers::ViewHelper'             => 'helpers/view_helper'  - good
+        #  'CIHelper'                        => 'cihelper'             - good
+        #  'Helpers::CIHelper'               => 'helpers/ci_helper'    - bad
+        #
+        # Newer Rails underscore behaviour:
+        #  'Helpers::ViewHelper'             => 'helpers/view_helper'  - good
+        #  'CIHelper'                        => 'cihelper'             - good
+        #  'Helpers::CIHelper'               => 'helpers/cihelper'     - good
         #
         @name ||= model_class.name.split('::').map(&:underscore).join('/')
+        if namecase == :underscore
+          @underscore_name ||= @name.tr('/', '_')
+        else
+          @name
+        end
       end
 
       # class User
-      #   plural_name => users
+      #   plural_name              => users
+      #   plural_name(:underscore) => users
       #
       # class Assets::Photo
-      #   plural_name => assets/photos
+      #   plural_name              => assets/photos
+      #   plural_name(:underscore) => assets_photos
       #
-      def plural_name
+      def plural_name(namecase = nil)
         @plural_name ||= name.pluralize
-      end
-
-      # class User
-      #   resource_name => users
-      #
-      # class Assets::Photo
-      #   resource_name => assets/photos
-      #
-      def resource_name
-        @resource_name ||= plural_name
+        if namecase == :underscore
+          @plural_underscore_name ||= @plural_name.tr('/', '_')
+        else
+          @plural_name
+        end
       end
 
       # class User
@@ -61,17 +70,30 @@ module Traits
       end
 
       # class User
-      #   lookup_name => User
+      #   lookup_name              => User
       #   lookup_name(:underscore) => user
       #
       # class Assets::Photo
-      #   lookup_name => AssetsPhoto
+      #   lookup_name              => AssetsPhoto
       #   lookup_name(:underscore) => assets_photo
       #
-      def lookup_name(namecase = :class)
-        namecase == :underscore ?
-            @lookup_name_underscore_case ||= name.gsub('/', '_') :
-            @lookup_name_class_case      ||= class_name.gsub('::', '')
+      def lookup_name(namecase = nil)
+        if namecase == :underscore
+          name(namecase)
+        else
+          @lookup_name ||= class_name.tr('::', '')
+        end
+      end
+
+      # TODO Deprecate?
+      # class User
+      #   resource_name => users
+      #
+      # class Assets::Photo
+      #   resource_name => assets/photos
+      #
+      def resource_name
+        @resource_name ||= plural_name
       end
 
       def to_hash
