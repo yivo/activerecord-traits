@@ -13,18 +13,31 @@ module Traits
       elsif active_record_instance?(obj)
         obj.class
 
+      elsif active_record_collection?(obj)
+        obj.model
+
       else
         case obj
-          when Symbol then obj.to_s.camelize.constantize
-          when String then obj.camelize.constantize
-          when Model  then obj.model_class
-          else raise UnidentifiedModelReference, obj
-        end
+          when String, Symbol
+            s = obj.kind_of?(Symbol) ? obj.to_s : obj
+            s.camelize.safe_constantize || s.tr('_', '/').camelize.safe_constantize
+
+          when Traits::Model, Traits::Attribute
+            obj.model_class
+
+          when Traits::Association
+            obj.from_class
+
+        end || raise(UnidentifiedModelReference, obj)
       end
     end
 
     def active_record_descendant?(obj)
       obj.kind_of?(Class) && obj < ActiveRecord::Base
+    end
+
+    def active_record_collection?(obj)
+      obj.kind_of?(ActiveRecord::Relation)
     end
 
     def active_record_instance?(obj)
