@@ -24,24 +24,24 @@ module Traits
     include Inheritance
     include EssayShortcuts
 
-    attr_reader :model_class, :column_definition
+    attr_reader :active_record, :column_definition
 
-    def initialize(model_class, column_definition)
-      @model_class       = model_class
+    def initialize(active_record, column_definition)
+      @active_record      = active_record
       @column_definition = column_definition
     end
 
     def model
-      model_class.traits
+      active_record.traits
     end
 
     # TODO Remove this
     def regular?
-      !(key? || sti_type? || polymorphic_type? || active_record_timestamp?)
+      !(key? || inheritance_type? || polymorphic_type? || active_record_timestamp?)
     end
 
     def validators
-      model_class.validators_on(name)
+      active_record.validators_on(name)
     end
 
     def value_from(model_instance)

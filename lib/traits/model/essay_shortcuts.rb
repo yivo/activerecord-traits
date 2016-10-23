@@ -5,7 +5,7 @@ module Traits
   class Model
     module EssayShortcuts
       def features
-        model_class.features
+        active_record.features
       end
     end
   end

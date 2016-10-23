@@ -6,7 +6,7 @@ module Traits
     module Querying
       def arel
         table = if features.try(:translates_with_globalize?)
-          model_class.features.globalize.translation_model_class.arel_table
+          active_record.features.globalize.translation_model_class.arel_table
         else
           model.arel
         end

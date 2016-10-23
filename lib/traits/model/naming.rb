@@ -34,7 +34,7 @@ module Traits
         #  'CIHelper'                        => 'cihelper'             - good
         #  'Helpers::CIHelper'               => 'helpers/cihelper'     - good
         #
-        @name ||= model_class.name.split('::').map(&:underscore).join('/')
+        @name ||= active_record.name.split('::').map(&:underscore).join('/')
         if namecase == :underscore
           @underscore_name ||= @name.tr('/', '_')
         else
@@ -66,7 +66,7 @@ module Traits
       #   class_name => Assets::Photo
       #
       def class_name
-        @class_name ||= model_class.name
+        @class_name ||= active_record.name
       end
 
       # class User

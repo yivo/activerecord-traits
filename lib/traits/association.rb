@@ -30,9 +30,9 @@ module Traits
 
     attr_reader :reflection
 
-    def initialize(model_class, reflection)
-      @from_class = model_class
-      @reflection = reflection
+    def initialize(active_record, reflection)
+      @from_active_record = active_record
+      @reflection         = reflection
     end
 
     def inspect
@@ -48,7 +48,7 @@ module Traits
     end
 
     def validators
-      from_class.validators_on(name)
+      from_active_record.validators_on(name)
     end
   end
 end

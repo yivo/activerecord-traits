@@ -9,7 +9,7 @@ module Traits
       end
 
       def quoted_name
-        @quoted_name ||= model_class.connection.quote_column_name(name)
+        @quoted_name ||= active_record.connection.quote_column_name(name)
       end
 
       def to_hash

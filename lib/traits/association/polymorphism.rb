@@ -52,15 +52,15 @@ module Traits
         if polymorphic?
           classes     = []
           attr_name   = attribute_name_for_polymorphic_type
-          this_class  = from_class
+          this_class  = from_active_record
 
-          Traits.active_record_descendants.each do |model_class|
+          Traits.active_record_descendants.each do |active_record|
             # Skip current model and models which are STI derived
-            next if model_class <= this_class # Means is or derived from current model
+            next if active_record <= this_class # Means is or derived from current model
 
-            model_class.traits.associations.each do |assoc|
+            active_record.traits.associations.each do |assoc|
               if assoc.attribute_name_for_polymorphic_type == attr_name
-                classes << assoc.from_class
+                classes << assoc.from_active_record
               end
             end
           end

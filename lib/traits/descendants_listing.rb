@@ -4,11 +4,11 @@
 module Traits
   module DescendantsListing
     def active_record_descendants_loaded?
-      !!@ar_descendants_loaded
+      !!@active_record_descendants_loaded
     end
 
     def load_active_record_descendants!
-      @ar_descendants_loaded ||= begin
+      @active_record_descendants_loaded ||= begin
         # Railties are not necessary here
         # Source: http://stackoverflow.com/questions/6497834/differences-between-railties-and-engines-in-ruby-on-rails-3
         Rails::Engine.subclasses.map(&:instance).each { |i| i.eager_load! }
@@ -18,23 +18,22 @@ module Traits
     end
 
     def invalidate_loaded_active_record_descendants!
-      @ar_descendants        = nil
-      @ar_descendants_loaded = false
+      @active_record_descendants_loaded = false
     end
 
-    def active_record_descendants
-      @ar_descendants ||= begin
-        load_active_record_descendants!
-        ActiveRecord::Base.descendants.reject! { |ar| excluded_active_record_descendant?(ar) }
-      end
+    def active_record_descendants(filter = true)
+      load_active_record_descendants!
+      ary = ActiveRecord::Base.descendants
+      ary.reject! { |ar| filter_active_record_descendant(ar) } if filter
+      ary
     end
 
-    def excluded_active_record_descendant?(model_class)
-      rules_for_excluding_active_records.any? do |rule|
-        case rule
-          when Regexp then model_class.name =~ rule
-          when String then model_class.name == rule
-          when Class  then model_class == rule
+    def filter_active_record_descendant(active_record)
+      active_record_filters.any? do |filter|
+        case filter
+          when Regexp then active_record.name =~ filter
+          when String then active_record.name == filter
+          when Class  then active_record == filter
           else false
         end
       end
@@ -43,10 +42,9 @@ module Traits
 
   extend DescendantsListing
 
-  # TODO Give a better name
-  mattr_accessor :rules_for_excluding_active_records
+  mattr_accessor :active_record_filters
 
-  self.rules_for_excluding_active_records = [
+  self.active_record_filters = [
     'Globalize::ActiveRecord::Translation',
     'ActiveRecord::SchemaMigration',
     /\AHABTM/,

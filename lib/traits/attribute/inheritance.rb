@@ -7,10 +7,9 @@ module Traits
       def inheritance_type?
         (model.inheritance_base? || model.inheritance_derived?) and name == model.inheritance_attribute.name
       end
-      alias sti_type? inheritance_type?
 
       def to_hash
-        super.merge!(is_sti_type: sti_type?)
+        super.merge!(is_inheritance_type: inheritance_type?)
       end
     end
   end

@@ -5,12 +5,12 @@ module Traits
   class Association
     module Members
       def from
-        @from_class.traits
+        @from_active_record.traits
       end
 
       # Returns the actual association establisher class
-      def from_class
-        @from_class
+      def from_active_record
+        @from_active_record
       end
 
       # Returns the actual associated class
@@ -18,12 +18,12 @@ module Traits
         reflection.klass.traits unless polymorphic?
       end
 
-      def to_class
+      def to_active_record
         reflection.klass unless polymorphic?
       end
 
       def self_to_self?
-        from_class == to_class
+        from_active_record == to_active_record
       end
 
       def to_hash

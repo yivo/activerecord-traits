@@ -7,29 +7,24 @@ module Traits
       def uses_inheritance?
         inheritance_base? || inheritance_derived?
       end
-      alias uses_sti? uses_inheritance?
 
       def inheritance_base?
-        model_class.descends_from_active_record? &&
-          !model_class.abstract_class? &&
-          model_class.subclasses.any? { |subclass| subclass.superclass == model_class }
+        active_record.descends_from_active_record? &&
+          !active_record.abstract_class? &&
+            active_record.subclasses.any? { |subclass| subclass.superclass == active_record }
       end
-      alias sti_base? inheritance_base?
 
       def inheritance_derived?
-        !model_class.descends_from_active_record?
+        !active_record.descends_from_active_record?
       end
-      alias sti_derived? inheritance_derived?
 
       def inheritance_attribute
-        attributes[model_class.inheritance_column]
+        attributes[active_record.inheritance_column]
       end
-      alias sti_attribute inheritance_attribute
 
       def inheritance_attribute_name
         inheritance_attribute.name if uses_inheritance?
       end
-      alias sti_attribute_name inheritance_attribute_name
 
       # class File < ActiveRecord::Base
       # end
@@ -49,15 +44,14 @@ module Traits
       # Portrait.traits.inheritance_chain => [File, Photo, Portrait]
       def inheritance_chain
         Traits.load_active_record_descendants!
-        model_class = self.model_class
-        chain       = [model_class]
-        until model_class.superclass == ActiveRecord::Base do
-          model_class = model_class.superclass
-          chain.unshift(model_class)
+        active_record = self.active_record
+        chain        = [active_record]
+        until active_record.superclass == ActiveRecord::Base do
+          active_record = active_record.superclass
+          chain.unshift(active_record)
         end
         chain
       end
-      alias sti_chain inheritance_chain
 
       def inheritance_base
         inheritance_chain[0]
@@ -65,10 +59,10 @@ module Traits
 
       def to_hash
         super.merge!(
-          is_sti_base:        sti_base?,
-          is_sti_derived:     sti_derived?,
-          sti_attribute_name: sti_attribute_name,
-          sti_chain:          sti_chain.map { |model_class| model_class.traits.name }
+          is_inheritance_base:        inheritance_base?,
+          is_inheritance_derived:     inheritance_derived?,
+          inheritance_attribute_name: inheritance_attribute.try(:name),
+          inheritance_chain:          inheritance_chain.map { |active_record| active_record.traits.name }
         )
       end
     end

@@ -25,6 +25,12 @@ module Traits
       by_name(arg)
     end
 
+    def fetch(name)
+      el = by_name(name)
+      raise StandardError, "#{name.inspect} not found" unless el
+      el
+    end
+
     def each(&block)
       @list.each(&block)
     end

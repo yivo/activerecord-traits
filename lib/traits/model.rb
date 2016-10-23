@@ -22,13 +22,10 @@ module Traits
     include EssayShortcuts
     include I18n
 
-    attr_reader :model_class
+    attr_accessor :active_record
 
-    alias active_record model_class
-    alias klass         model_class
-
-    def initialize(model_class)
-      @model_class = model_class
+    def initialize(active_record)
+      @active_record = active_record
     end
 
     def attributes
@@ -59,10 +56,10 @@ module Traits
 
     # TODO Store, Storage, Virtual attributes
     def inspect_attributes
-      if model_class.abstract_class?
+      if active_record.abstract_class?
         Traits::AttributeList.new([])
       else
-        columns = model_class.columns_hash.values
+        columns = active_record.columns_hash.values
 
         if features.try(:translates_with_globalize?)
           globalize       = features.globalize
@@ -75,7 +72,7 @@ module Traits
         end
 
         list = columns.map do |column|
-          Traits::Attribute.new(model_class, column)
+          Traits::Attribute.new(active_record, column)
         end
 
         Traits::AttributeList.new(list)
@@ -83,11 +80,11 @@ module Traits
     end
 
     def inspect_associations
-      if model_class.abstract_class?
+      if active_record.abstract_class?
         Traits::List.new([])
       else
-        list = model_class.reflections.map do |pair|
-          Traits::Association.new(model_class, pair.last)
+        list = active_record.reflections.map do |pair|
+          Traits::Association.new(active_record, pair.last)
         end
         Traits::List.new(list)
       end

@@ -2,11 +2,8 @@
 # frozen_string_literal: true
 
 module Traits
-  class UnidentifiedModelReference < StandardError
-  end
-
   module Utilities
-    def retrieve_model_class(obj)
+    def retrieve_active_record(obj)
       if active_record_descendant?(obj)
         obj
 
@@ -23,12 +20,17 @@ module Traits
             s.camelize.safe_constantize || s.tr('_', '/').camelize.safe_constantize
 
           when Traits::Model, Traits::Attribute
-            obj.model_class
+            obj.active_record
 
           when Traits::Association
-            obj.from_class
+            obj.from_active_record
+        end
+      end
+    end
 
-        end || raise(UnidentifiedModelReference, obj)
+    def retrieve_active_record!(obj)
+      retrieve_active_record(obj) || begin
+        raise ActiveRecordRetrieveError, "#{obj.inspect} is not a valid ActiveRecord reference"
       end
     end
 
@@ -43,11 +45,11 @@ module Traits
     def active_record_instance?(obj)
       obj.kind_of?(ActiveRecord::Base)
     end
-
-    def valid_active_record_identifier?(id)
-      id.kind_of?(String) || id.kind_of?(Numeric)
-    end
   end
 
   extend Utilities
+
+  # TODO Better name
+  class ActiveRecordRetrieveError < StandardError
+  end
 end

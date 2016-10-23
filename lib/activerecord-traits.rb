@@ -18,35 +18,39 @@ require 'traits/model'
 require 'traits/list'
 
 class ActiveRecord::Base
-  def self.traits
-    @traits ||= Traits::Model.new(self)
+  class << self
+    def traits
+      @traits ||= Traits::Model.new(self)
+    end
   end
 end
 
 module Traits
   extend Enumerable
 
-  def self.for(obj)
-    retrieve_model_class(obj).traits
-  end
-
-  def self.each(&block)
-    active_record_descendants.each { |ar| block.call(ar.traits) }
-  end
-
-  def self.all
-    each_with_object({}) do |traits, memo|
-      memo[traits.name] = traits
+  class << self
+    def for(obj)
+      retrieve_active_record!(obj).traits
     end
-  end
 
-  def self.each_attribute(&block)
-    each { |traits| traits.attributes.each(&block) }
-  end
+    def each
+      active_record_descendants.each { |ar| yield(ar.traits) }
+    end
 
-  def self.to_hash
-    each_with_object({}) do |traits, memo|
-      memo[traits.name] = traits.to_hash
+    def all
+      each_with_object({}) do |traits, memo|
+        memo[traits.name] = traits
+      end
+    end
+
+    def each_attribute(&block)
+      each { |traits| traits.attributes.each(&block) }
+    end
+
+    def to_hash
+      each_with_object({}) do |traits, memo|
+        memo[traits.name] = traits.to_hash
+      end
     end
   end
 end

@@ -5,13 +5,11 @@ module Traits
   class Model
     module Polymorphism
       def polymorphic_type
-        @polymorphic_type ||= model_class.base_class.name.to_sym
+        @polymorphic_type ||= active_record.base_class.name.to_sym
       end
 
       def to_hash
-        super.merge!(
-          polymorphic_type: polymorphic_type
-        )
+        super.merge!(polymorphic_type: polymorphic_type)
       end
     end
   end

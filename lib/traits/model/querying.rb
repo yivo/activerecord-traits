@@ -8,7 +8,7 @@ module Traits
         # Sometimes table doesn't have primary key.
         # This might be many-to-many tables (HABTM).
         @pk_name ||= begin
-          pk = model_class.primary_key
+          pk = active_record.primary_key
           pk.kind_of?(String) ? pk.to_sym : pk
         end
       end
@@ -18,19 +18,19 @@ module Traits
       end
 
       def arel
-        model_class.arel_table
+        active_record.arel_table
       end
 
       def connection
-        model_class.connection
+        active_record.connection
       end
 
       def table_name
-        @table_name ||= model_class.table_name
+        @table_name ||= active_record.table_name
       end
 
       def quoted_table_name
-        @quote_table_name ||= connection.quote_table_name(model_class.table_name)
+        @quote_table_name ||= connection.quote_table_name(active_record.table_name)
       end
 
       def to_hash

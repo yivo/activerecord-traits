@@ -32,7 +32,7 @@ API design is done in good and clear manner for best understanding.
   end
 
   Author.traits.associations[:articles].has_many?                    # => true
-  Author.traits.associations[:articles].to_class                     # => Article
+  Author.traits.associations[:articles].to.active_record             # => Article
   Author.traits.associations[:articles].paired_through_polymorphism? # => true
   
   Photo.traits.associations[:imageable].polymorphic?                          # => true
@@ -50,9 +50,9 @@ API design is done in good and clear manner for best understanding.
   class VideoGame < Present
   end
   
-  Present.traits.sti_base? # => true
-  Toy.traits.sti_derived?  # => true
-  Toy.traits.sti_chain     # => [Present, Toy]
+  Present.traits.inheritance_base? # => true
+  Toy.traits.inheritance_derived?  # => true
+  Toy.traits.inheritance_chain     # => [Present, Toy]
   
 ```
 

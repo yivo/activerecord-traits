@@ -6,13 +6,13 @@ module Traits
     module Key
       def primary_key?
         column_definition.try(:primary) ||
-          model_class.primary_key == column_definition.name ||
+          active_record.primary_key == column_definition.name ||
           type == :primary_key
       end
 
       def foreign_key?
         attr_name       = name
-        attr_translates = model_class.attribute_features[attr_name].try(:translates_with_globalize?)
+        attr_translates = active_record.attribute_features[attr_name].try(:translates_with_globalize?)
 
         model.associations.any? do |assoc|
           if assoc.belongs_to?
