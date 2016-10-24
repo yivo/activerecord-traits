@@ -16,7 +16,7 @@ module Traits
       else
         case obj
           when String, Symbol
-            s = obj.kind_of?(Symbol) ? obj.to_s : obj
+            s = (obj.kind_of?(Symbol) ? obj.to_s : obj).underscore
             s.camelize.safe_constantize || s.tr('_', '/').camelize.safe_constantize
 
           when Traits::Model, Traits::Attribute
