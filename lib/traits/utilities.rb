@@ -16,8 +16,9 @@ module Traits
       else
         case obj
           when String, Symbol
-            s = (obj.kind_of?(Symbol) ? obj.to_s : obj).underscore.singularize
-            s.camelize.safe_constantize || s.tr('_', '/').camelize.safe_constantize
+            str = (obj.kind_of?(Symbol) ? obj.to_s : obj).underscore.singularize
+            kls = str.camelize.safe_constantize || str.tr('_', '/').camelize.safe_constantize
+            kls if active_record_descendant?(kls)
 
           when Traits::Model, Traits::Attribute
             obj.active_record
